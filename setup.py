@@ -24,7 +24,7 @@ subprocess.run(
 requirements = [
     'jsonschema==3.2.0',
     'singleton-decorator==1.0.0',
-    'websocket-client==1.4.2',
+    'websocket-client==1.5.0',
 ]
 
 setup(
