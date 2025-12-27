@@ -109,6 +109,9 @@ class IpcClient:
         message -- the received message
         """
         try:
+            if os.path.exists('/boot/firmware/developer.txt'):
+                print('gateway_addon: on_message: \n' + str(message))
+            
             resp = json.loads(message)
 
             self.validator.validate({'message': resp})
