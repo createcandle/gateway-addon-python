@@ -31,7 +31,7 @@ class Resolver(jsonschema.RefResolver):
             referrer=None,
             cache_remote=True,
         )
-        self.developer_mode = os.path.exists('/boot/firmware/developer.txt'):
+        self.developer_mode = os.path.exists('/boot/firmware/developer.txt')
 
     def resolve_remote(self, uri):
         """
