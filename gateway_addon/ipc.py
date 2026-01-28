@@ -31,6 +31,7 @@ class Resolver(jsonschema.RefResolver):
             referrer=None,
             cache_remote=True,
         )
+        self.developer_mode = os.path.exists('/boot/firmware/developer.txt'):
 
     def resolve_remote(self, uri):
         """
@@ -109,8 +110,8 @@ class IpcClient:
         message -- the received message
         """
         try:
-            if os.path.exists('/boot/firmware/developer.txt'):
-                print('gateway_addon: on_message: \n' + str(message))
+            if self.developer_mode:
+                print('gateway_addon_python: developer.txt -> on_message: \n' + str(message))
             
             resp = json.loads(message)
 
