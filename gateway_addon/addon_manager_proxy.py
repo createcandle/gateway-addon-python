@@ -497,7 +497,7 @@ class AddonManagerProxy:
                         if supports_meta:
                             print("addon_manager_proxy: addon supports meta")
                             prop.set_value(msg['data']['propertyValue'],msg['data']['propertyMeta'])
-                        else
+                        else:
                             prop.set_value(msg['data']['propertyValue'])
                     else:
                         prop.set_value(msg['data']['propertyValue'])
