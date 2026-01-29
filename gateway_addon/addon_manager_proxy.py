@@ -7,6 +7,7 @@ import json
 import threading
 import time
 import websocket
+import inspect
 
 from .api_handler_utils import APIRequest, APIResponse
 from .constants import MessageType
@@ -178,6 +179,9 @@ class AddonManagerProxy:
         url -- URL to site with further explanation or troubleshooting info
         device -- Device the prompt is associated with
         """
+        if str(adapter.id).endsWth('Adapter'):
+            adapter.id = adapter.id[:-7]
+      
         data = {
             'adapterId': adapter.id,
             'prompt': prompt,
@@ -200,6 +204,8 @@ class AddonManagerProxy:
         url -- URL to site with further explanation or troubleshooting info
         device -- Device the prompt is associated with
         """
+        if str(adapter.id).endsWth('Adapter'):
+            adapter.id = adapter.id[:-7]
         data = {
             'adapterId': adapter.id,
             'prompt': prompt,
@@ -477,7 +483,23 @@ class AddonManagerProxy:
                     return
 
                 try:
-                    prop.set_value(msg['data']['propertyValue'])
+                    if 'meta' in msg['data']:
+                        print("addon_manager_proxy: message has meta")
+                        sig = inspect.signature(prop.set_value)
+                        supports_meta = False
+                        if len(sig.parameters) > 1:
+                            for param in sig.parameters.values():
+                                if param.name == 'meta'
+                                    supports_meta = True
+                                    break
+                        
+                        if supports_meta:
+                            print("addon_manager_proxy: addon supports meta")
+                            prop.set_value(msg['data']['propertyValue'],msg['data']['meta'])
+                        else
+                            prop.set_value(msg['data']['propertyValue'])
+                    else:
+                        prop.set_value(msg['data']['propertyValue'])
                     if prop.fire_and_forget:
                         proxy.send_property_changed_notification(prop)
                 except PropertyError:
