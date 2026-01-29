@@ -490,7 +490,7 @@ class AddonManagerProxy:
                         supports_meta = False
                         if len(sig.parameters) > 1:
                             for param in sig.parameters.values():
-                                if param.name == 'meta'
+                                if param.name == 'meta':
                                     supports_meta = True
                                     break
                         
