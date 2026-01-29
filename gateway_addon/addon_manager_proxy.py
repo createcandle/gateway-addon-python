@@ -484,7 +484,7 @@ class AddonManagerProxy:
                     return
 
                 try:
-                    if 'meta' in msg['data']:
+                    if 'propertyMeta' in msg['data']:
                         print("addon_manager_proxy: message has meta")
                         sig = inspect.signature(prop.set_value)
                         supports_meta = False
@@ -496,7 +496,7 @@ class AddonManagerProxy:
                         
                         if supports_meta:
                             print("addon_manager_proxy: addon supports meta")
-                            prop.set_value(msg['data']['propertyValue'],msg['data']['meta'])
+                            prop.set_value(msg['data']['propertyValue'],msg['data']['propertyMeta'])
                         else
                             prop.set_value(msg['data']['propertyValue'])
                     else:
