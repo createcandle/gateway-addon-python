@@ -31,7 +31,6 @@ class Resolver(jsonschema.RefResolver):
             referrer=None,
             cache_remote=True,
         )
-        self.developer_mode = os.path.exists('/boot/firmware/developer.txt')
 
     def resolve_remote(self, uri):
         """
@@ -67,6 +66,8 @@ class IpcClient:
         self.verbose = verbose
         self.owner_message_handler = on_message
 
+        self.developer_mode = os.path.exists('/boot/firmware/developer.txt')
+        
         self.validator = jsonschema.Draft7Validator(
             schema=schema,
             resolver=Resolver()
