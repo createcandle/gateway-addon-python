@@ -67,7 +67,7 @@ class IpcClient:
         self.owner_message_handler = on_message
 
         self.developer_mode = os.path.exists('/boot/firmware/developer.txt')
-        print("ipc.py: self.developer_mode: " + str(self.developer_mode))
+        #print("ipc.py: self.developer_mode: " + str(self.developer_mode))
         
         self.validator = jsonschema.Draft7Validator(
             schema=schema,
