@@ -179,8 +179,8 @@ class AddonManagerProxy:
         url -- URL to site with further explanation or troubleshooting info
         device -- Device the prompt is associated with
         """
-        if str(adapter.id).endsWth('Adapter'):
-            adapter.id = adapter.id[:-7]
+        #if str(adapter.id).endsWth('Adapter'):
+        #    adapter.id = adapter.id[:-7]
       
         data = {
             'adapterId': adapter.id,
@@ -204,8 +204,9 @@ class AddonManagerProxy:
         url -- URL to site with further explanation or troubleshooting info
         device -- Device the prompt is associated with
         """
-        if str(adapter.id).endsWth('Adapter'):
-            adapter.id = adapter.id[:-7]
+        #if str(adapter.id).endsWth('Adapter'):
+        #    adapter.id = adapter.id[:-7]
+      
         data = {
             'adapterId': adapter.id,
             'prompt': prompt,
