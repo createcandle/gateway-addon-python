@@ -122,7 +122,7 @@ class Property:
         """
         return self.value
 
-    def set_value(self, value, meta):
+    def set_value(self, value, meta=None):
         """
         Set the current value of the property.
 
