@@ -344,14 +344,13 @@ class AddonManagerProxy:
                 try:
                     request = APIRequest(**msg['data']['request'])
                     response = handler.handle_request(request)
-                    if(response){
+                    if response:
                         proxy.send(MessageType.API_HANDLER_API_RESPONSE, {
                             'packageName': package_name,
                             'messageId': message_id,
                             'response': response.to_json()
                         })
-                    }
-                    else{
+                    else:
                         proxy.send(MessageType.API_HANDLER_API_RESPONSE, {
                             'packageName': package_name,
                             'messageId': message_id,
@@ -361,7 +360,7 @@ class AddonManagerProxy:
                                 content="Error, handler response was null",
                             ).to_json(),
                         })
-                    }
+                    
                     
                 except APIHandlerError as e:
                     proxy.send(MessageType.API_HANDLER_API_RESPONSE, {
