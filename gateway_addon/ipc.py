@@ -66,9 +66,6 @@ class IpcClient:
         self.verbose = verbose
         self.owner_message_handler = on_message
 
-        self.developer_mode = os.path.exists('/boot/firmware/developer_ipc.txt')
-        #print("ipc.py: self.developer_mode: " + str(self.developer_mode))
-        
         self.validator = jsonschema.Draft7Validator(
             schema=schema,
             resolver=Resolver()
@@ -112,9 +109,6 @@ class IpcClient:
         message -- the received message
         """
         try:
-            if self.developer_mode:
-                print('gateway_addon_python: developer_ipc.txt -> on_message: \n' + str(message))
-            
             resp = json.loads(message)
 
             self.validator.validate({'message': resp})

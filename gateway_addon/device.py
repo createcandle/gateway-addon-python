@@ -186,7 +186,7 @@ class Device:
         """
         self.adapter.manager_proxy.send_connected_notification(self, connected)
 
-    def set_property(self, property_name, value, meta):
+    def set_property(self, property_name, value):
         """
         Set a property value.
 
@@ -197,7 +197,7 @@ class Device:
         if not prop:
             return
 
-        prop.set_value(value, meta)
+        prop.set_value(value)
 
     def request_action(self, action_id, action_name, action_input):
         """

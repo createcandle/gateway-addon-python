@@ -7,7 +7,6 @@ import json
 import threading
 import time
 import websocket
-import inspect
 
 from .api_handler_utils import APIRequest, APIResponse
 from .constants import MessageType
@@ -179,9 +178,6 @@ class AddonManagerProxy:
         url -- URL to site with further explanation or troubleshooting info
         device -- Device the prompt is associated with
         """
-        #if str(adapter.id).endsWth('Adapter'):
-        #    adapter.id = adapter.id[:-7]
-      
         data = {
             'adapterId': adapter.id,
             'prompt': prompt,
@@ -204,9 +200,6 @@ class AddonManagerProxy:
         url -- URL to site with further explanation or troubleshooting info
         device -- Device the prompt is associated with
         """
-        #if str(adapter.id).endsWth('Adapter'):
-        #    adapter.id = adapter.id[:-7]
-      
         data = {
             'adapterId': adapter.id,
             'prompt': prompt,
@@ -344,24 +337,12 @@ class AddonManagerProxy:
                 try:
                     request = APIRequest(**msg['data']['request'])
                     response = handler.handle_request(request)
-                    if response:
-                        proxy.send(MessageType.API_HANDLER_API_RESPONSE, {
-                            'packageName': package_name,
-                            'messageId': message_id,
-                            'response': response.to_json()
-                        })
-                    else:
-                        proxy.send(MessageType.API_HANDLER_API_RESPONSE, {
-                            'packageName': package_name,
-                            'messageId': message_id,
-                            'response': APIResponse(
-                                status=500,
-                                content_type='text/plain',
-                                content="Error, handler response was null",
-                            ).to_json(),
-                        })
-                    
-                    
+
+                    proxy.send(MessageType.API_HANDLER_API_RESPONSE, {
+                        'packageName': package_name,
+                        'messageId': message_id,
+                        'response': response.to_json()
+                    })
                 except APIHandlerError as e:
                     proxy.send(MessageType.API_HANDLER_API_RESPONSE, {
                         'packageName': package_name,
@@ -496,23 +477,7 @@ class AddonManagerProxy:
                     return
 
                 try:
-                    if 'propertyMeta' in msg['data']:
-                        print("addon_manager_proxy: message has meta")
-                        sig = inspect.signature(prop.set_value)
-                        supports_meta = False
-                        if len(sig.parameters) > 1:
-                            for param in sig.parameters.values():
-                                if param.name == 'meta':
-                                    supports_meta = True
-                                    break
-                        
-                        if supports_meta:
-                            print("addon_manager_proxy: addon supports meta")
-                            prop.set_value(msg['data']['propertyValue'],msg['data']['propertyMeta'])
-                        else:
-                            prop.set_value(msg['data']['propertyValue'])
-                    else:
-                        prop.set_value(msg['data']['propertyValue'])
+                    prop.set_value(msg['data']['propertyValue'])
                     if prop.fire_and_forget:
                         proxy.send_property_changed_notification(prop)
                 except PropertyError:
