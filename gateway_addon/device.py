@@ -30,6 +30,7 @@ class Device:
         self.pin_required = False
         self.pin_pattern = ''
         self.credentials_required = False
+        self.connected = False
 
     def as_dict(self):
         """
@@ -58,6 +59,7 @@ class Device:
                 'pattern': self.pin_pattern,
             },
             'credentialsRequired': self.credentials_required,
+            'connected': self.connected
         }
 
     def as_thing(self):
@@ -84,6 +86,7 @@ class Device:
                 'pattern': self.pin_pattern,
             },
             'credentialsRequired': self.credentials_required,
+            'connected': self.connected
         }
 
         if self.description:
@@ -184,6 +187,7 @@ class Device:
 
         connected -- whether or not the device is connected
         """
+        self.connected = connected
         self.adapter.manager_proxy.send_connected_notification(self, connected)
 
     def set_property(self, property_name, value, meta):
